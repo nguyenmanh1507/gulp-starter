@@ -1,0 +1,25 @@
+{
+  "name": "gulp-starter",
+  "version": "1.0.0",
+  "description": "Gulp starter template",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguyenmanh1507/gulp-starter.git"
+  },
+  "keywords": [
+    "gulpjs"
+  ],
+  "author": "nguyenmanh1507",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nguyenmanh1507/gulp-starter/issues"
+  },
+  "homepage": "https://github.com/nguyenmanh1507/gulp-starter#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
+}
