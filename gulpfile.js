@@ -3,7 +3,8 @@
 var gulp = require('gulp'),
 		sass = require('gulp-sass'),
 		sourcemaps = require('gulp-sourcemaps'),
-		jshint = require('gulp-jshint')
+		jshint = require('gulp-jshint'),
+		wiredep = require('wiredep')
 ;
 
 // SCSS task
@@ -25,6 +26,18 @@ gulp.task('lint', function() {
 	return gulp.src('app/js/*.js')
 		.pipe(jshint())
 		.pipe(jshint.reporter('jshint-stylish'))
+		;
+
+});
+
+// Bower task
+gulp.task('bower',function() {
+
+	return gulp.src('app/*.html')
+		.pipe(wiredep({
+			exclude: ['app/bower_components/modernizr/dist/modernizr-build.js']
+		}))
+		.pipe(gulp.dest('app'))
 		;
 
 });
