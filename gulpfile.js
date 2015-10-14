@@ -4,7 +4,12 @@ var gulp = require('gulp'),
 		sass = require('gulp-sass'),
 		sourcemaps = require('gulp-sourcemaps'),
 		jshint = require('gulp-jshint'),
-		wiredep = require('wiredep')
+		wiredep = require('wiredep').stream,
+		useref = require('gulp-useref'),
+		del = require('del'),
+		gulpif = require('gulp-if'),
+		uglify = require('gulp-uglify'),
+		minifyCss = require('gulp-minify-css'),
 ;
 
 // SCSS task
@@ -39,5 +44,28 @@ gulp.task('bower',function() {
 		}))
 		.pipe(gulp.dest('app'))
 		;
+
+});
+
+// Useref task
+gulp.task('useref', ['del'], function() {
+
+	var assets = useref.assets();
+
+	return gulp.src('app/*.html')
+		.pipe(assets)
+		.pipe(gulpif('*.js', uglify()))
+		.pipe(gulpif('*.css', minifyCss()))
+		.pipe(assets.restore())
+		.pipe(useref())
+		.pipe(gulp.dest('dist'))
+		;
+
+});
+
+// Delete files task
+gulp.task('del', function() {
+
+	return del('dist/**');
 
 });
