@@ -10,6 +10,7 @@ var gulp = require('gulp'),
 		gulpif = require('gulp-if'),
 		uglify = require('gulp-uglify'),
 		minifyCss = require('gulp-minify-css'),
+		browserSync = require('browser-sync')
 ;
 
 // SCSS task
@@ -20,6 +21,7 @@ gulp.task('sass', function() {
 		.pipe(sass().on('error', sass.logError))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('app/css'))
+		.pipe(browserSync.stream())
 		;
 
 });
@@ -34,6 +36,10 @@ gulp.task('lint', function() {
 		;
 
 });
+
+// Reload browser after lint task complete
+gulp.task('js-watch', ['lint'], browserSync.reload);
+
 
 // Bower task
 gulp.task('bower',function() {
@@ -69,3 +75,20 @@ gulp.task('del', function() {
 	return del('dist/**');
 
 });
+
+// BrowserSync
+gulp.task('serve', function() {
+	browserSync.init({
+		server: 'app'
+	});
+
+	gulp.watch('app/scss/**/*.scss', ['sass']);
+	gulp.watch('app/*.html').on('change', browserSync.reload);
+	gulp.watch('app/js/*.js', ['js-watch']);
+});
+
+// Build task
+gulp.task('build', ['useref']);
+
+// Default task
+gulp.task('default', ['serve']);
