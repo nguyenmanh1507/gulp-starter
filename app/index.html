@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
@@ -6,8 +6,16 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
+  <!-- build:css css/lib.min.css -->
+  <!-- bower:css -->
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css css/app.min.css -->
   <link rel="stylesheet" href="css/app.css">
+  <!-- endbuild -->
+  <!-- build:js js/modernizr.min.js async -->
+  <script async src="bower_components/modernizr/dist/modernizr-build.js"></script>
+  <!-- endbuild -->
 </head>
 <body>
   <!--[if lt IE 8]>
@@ -16,6 +24,13 @@
   
   <h1>Hello World</h1>
 
+  <!-- build:js js/lib.min.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:js js/app.min.js -->
   <script src="js/app.js"></script>
+  <!-- endbuild -->
 </body>
 </html>
