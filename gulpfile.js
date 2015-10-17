@@ -10,7 +10,9 @@ var gulp = require('gulp'),
 		gulpif = require('gulp-if'),
 		uglify = require('gulp-uglify'),
 		minifyCss = require('gulp-minify-css'),
-		browserSync = require('browser-sync')
+		browserSync = require('browser-sync'),
+		imagemin = require('gulp-imagemin'),
+		pngquant = require('imagemin-pngquant')
 ;
 
 // SCSS task
@@ -39,6 +41,20 @@ gulp.task('lint', function() {
 
 // Reload browser after lint task complete
 gulp.task('js-watch', ['lint'], browserSync.reload);
+
+// Image Task
+gulp.task('imagemin', function() {
+
+	return gulp.src('app/images/*')
+		.pipe(imagemin({
+			progressive: true,
+			svgoPlugins: [{removeViewBox: false}],
+			use: [pngquant()]
+		}))
+		.pipe(gulp.dest('dist/images'))
+		;
+
+});
 
 
 // Bower task
