@@ -12,7 +12,8 @@ var gulp = require('gulp'),
 		minifyCss = require('gulp-minify-css'),
 		browserSync = require('browser-sync'),
 		imagemin = require('gulp-imagemin'),
-		pngquant = require('imagemin-pngquant')
+		pngquant = require('imagemin-pngquant'),
+		tinypng = require('gulp-tinypng-compress')
 ;
 
 // SCSS task
@@ -48,8 +49,24 @@ gulp.task('imagemin', function() {
 	return gulp.src('app/images/*')
 		.pipe(imagemin({
 			progressive: true,
+			arithmetic: true,
 			svgoPlugins: [{removeViewBox: false}],
-			use: [pngquant()]
+			use: [pngquant(), jpegtran()]
+		}))
+		.pipe(gulp.dest('dist/images'))
+		;
+
+});
+
+// Compress images using tinypng
+gulp.task('tinypng', function() {
+
+	return gulp.src('app/images/*.{png,jpg,jpeg}')
+		.pipe(tinypng({
+			key: 'NkzrC5sBEilVtL9BEAbQ6JGJAVOUJkdf',
+			checkSigs: true,
+			sigFile: 'images/.tinypng-sigs',
+			log: true
 		}))
 		.pipe(gulp.dest('dist/images'))
 		;
