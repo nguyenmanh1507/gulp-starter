@@ -13,7 +13,8 @@ var gulp = require('gulp'),
 		browserSync = require('browser-sync'),
 		imagemin = require('gulp-imagemin'),
 		pngquant = require('imagemin-pngquant'),
-		tinypng = require('gulp-tinypng-compress')
+		tinypng = require('gulp-tinypng-compress'),
+		autoprefixer = require('gulp-autoprefixer')
 ;
 
 // SCSS task
@@ -22,6 +23,7 @@ gulp.task('sass', function() {
 	return gulp.src('app/scss/app.scss')
 		.pipe(sourcemaps.init())
 		.pipe(sass().on('error', sass.logError))
+		.pipe(autoprefixer())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('app/css'))
 		.pipe(browserSync.stream())
