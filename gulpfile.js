@@ -81,7 +81,7 @@ gulp.task('bower',function() {
 
 	return gulp.src('app/*.html')
 		.pipe(wiredep({
-			exclude: ['app/bower_components/modernizr/dist/modernizr-build.js']
+			exclude: ['app/bower_components/modernizr/dist/modernizr-build.js', 'app/bower_components/normalize-css/normalize.css']
 		}))
 		.pipe(gulp.dest('app'))
 		;
