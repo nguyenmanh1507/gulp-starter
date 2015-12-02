@@ -1,5 +1,33 @@
 'use strict';
 
+// Define Folder Paths
+var basePaths = {
+			src: 'app/',
+			dest: 'dist/',
+			bower: 'app/bower_components/'
+		},
+		paths = {
+			images: {
+				src: basePaths.src + 'images/',
+				dest: basePaths.dest + 'images/'
+			},
+			scripts: {
+				src: basePaths.src + 'js/',
+				dest: basePaths.dest + 'js/'
+			},
+			styles: {
+				src: basePaths.src + 'css/',
+				dest: basePaths.dest + 'css/'
+			}
+		},
+		appFiles = {
+			styles: paths.styles.src + '**/*.scss',
+			scripts: paths.scripts.src + '*.js',
+			images: paths.images.src + '*'
+		}
+;
+	
+
 var gulp = require('gulp'),
 		sass = require('gulp-sass'),
 		sourcemaps = require('gulp-sourcemaps'),
@@ -20,12 +48,12 @@ var gulp = require('gulp'),
 // SCSS task
 gulp.task('sass', function() {
 
-	return gulp.src('app/scss/app.scss')
+	return gulp.src(appFiles.styles)
 		.pipe(sourcemaps.init())
 		.pipe(sass().on('error', sass.logError))
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest('app/css'))
+		.pipe(gulp.dest(paths.styles.dest))
 		.pipe(browserSync.stream())
 		;
 
@@ -35,7 +63,7 @@ gulp.task('sass', function() {
 // JSHint task
 gulp.task('lint', function() {
 
-	return gulp.src('app/js/*.js')
+	return gulp.src(appFiles.scripts)
 		.pipe(jshint())
 		.pipe(jshint.reporter('jshint-stylish'))
 		;
@@ -48,14 +76,14 @@ gulp.task('js-watch', ['lint'], browserSync.reload);
 // Image Task
 gulp.task('imagemin', function() {
 
-	return gulp.src('app/images/*')
+	return gulp.src(appFiles.images)
 		.pipe(imagemin({
 			progressive: true,
 			arithmetic: true,
 			svgoPlugins: [{removeViewBox: false}],
 			use: [pngquant(), jpegtran()]
 		}))
-		.pipe(gulp.dest('dist/images'))
+		.pipe(gulp.dest(paths.images.dest))
 		;
 
 });
@@ -63,14 +91,14 @@ gulp.task('imagemin', function() {
 // Compress images using tinypng
 gulp.task('tinypng', function() {
 
-	return gulp.src('app/images/*.{png,jpg,jpeg}')
+	return gulp.src(appFiles.images + '.{png,jpg,jpeg}')
 		.pipe(tinypng({
 			key: 'NkzrC5sBEilVtL9BEAbQ6JGJAVOUJkdf',
 			checkSigs: true,
-			sigFile: 'images/.tinypng-sigs',
+			sigFile: 'app/images/.tinypng-sigs',
 			log: true
 		}))
-		.pipe(gulp.dest('dist/images'))
+		.pipe(gulp.dest(paths.images.dest))
 		;
 
 });
@@ -117,9 +145,9 @@ gulp.task('serve', function() {
 		server: 'app'
 	});
 
-	gulp.watch('app/scss/**/*.scss', ['sass']);
+	gulp.watch(appFiles.styles, ['sass']);
 	gulp.watch('app/*.html').on('change', browserSync.reload);
-	gulp.watch('app/js/*.js', ['js-watch']);
+	gulp.watch(appFiles.scripts, ['js-watch']);
 });
 
 // Build task
