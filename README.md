@@ -20,6 +20,7 @@ Fast dive in to write code, task automate by Gulpjs
 
 ## Gulp Plugins
 
+* [gulp-loadplugins](https://www.npmjs.com/package/gulp-load-plugins) - Automatically load any gulp plugins in your package.json.
 * [Browsersync](http://www.browsersync.io/docs/gulp/) - Time-saving synchronised browser testing (error when install).
 * [del](https://www.npmjs.com/package/del) - Delete files/folders using globs.
 * [gulp-if](https://www.npmjs.com/package/gulp-if) - Conditionally run a task.
