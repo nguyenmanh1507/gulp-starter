@@ -29,30 +29,22 @@ var basePaths = {
 	
 
 var gulp = require('gulp'),
-		sass = require('gulp-sass'),
-		sourcemaps = require('gulp-sourcemaps'),
-		jshint = require('gulp-jshint'),
+		gulpLoadPlugins = require('gulp-load-plugins'),
+		$ = gulpLoadPlugins(),
 		wiredep = require('wiredep').stream,
-		useref = require('gulp-useref'),
 		del = require('del'),
-		gulpif = require('gulp-if'),
-		uglify = require('gulp-uglify'),
-		minifyCss = require('gulp-minify-css'),
 		browserSync = require('browser-sync'),
-		imagemin = require('gulp-imagemin'),
-		pngquant = require('imagemin-pngquant'),
-		tinypng = require('gulp-tinypng-compress'),
-		autoprefixer = require('gulp-autoprefixer')
+		pngquant = require('imagemin-pngquant')
 ;
 
 // SCSS task
 gulp.task('sass', function() {
 
 	return gulp.src(appFiles.styles)
-		.pipe(sourcemaps.init())
-		.pipe(sass().on('error', sass.logError))
-		.pipe(autoprefixer())
-		.pipe(sourcemaps.write())
+		.pipe($.sourcemaps.init())
+		.pipe($.sass().on('error', $.sass.logError))
+		.pipe($.autoprefixer())
+		.pipe($.sourcemaps.write())
 		.pipe(gulp.dest(paths.styles.dest))
 		.pipe(browserSync.stream())
 		;
@@ -64,8 +56,8 @@ gulp.task('sass', function() {
 gulp.task('lint', function() {
 
 	return gulp.src(appFiles.scripts)
-		.pipe(jshint())
-		.pipe(jshint.reporter('jshint-stylish'))
+		.pipe($.jshint())
+		.pipe($.jshint.reporter('jshint-stylish'))
 		;
 
 });
@@ -77,7 +69,7 @@ gulp.task('js-watch', ['lint'], browserSync.reload);
 gulp.task('imagemin', function() {
 
 	return gulp.src(appFiles.images)
-		.pipe(imagemin({
+		.pipe($.imagemin({
 			progressive: true,
 			arithmetic: true,
 			svgoPlugins: [{removeViewBox: false}],
@@ -92,7 +84,7 @@ gulp.task('imagemin', function() {
 gulp.task('tinypng', function() {
 
 	return gulp.src(appFiles.images + '.{png,jpg,jpeg}')
-		.pipe(tinypng({
+		.pipe($.tinypng({
 			key: 'NkzrC5sBEilVtL9BEAbQ6JGJAVOUJkdf',
 			checkSigs: true,
 			sigFile: 'app/images/.tinypng-sigs',
@@ -123,10 +115,10 @@ gulp.task('useref', ['del'], function() {
 
 	return gulp.src('app/*.html')
 		.pipe(assets)
-		.pipe(gulpif('*.js', uglify()))
-		.pipe(gulpif('*.css', minifyCss()))
+		.pipe($.gulpif('*.js', $.uglify()))
+		.pipe($.gulpif('*.css', $.minifyCss()))
 		.pipe(assets.restore())
-		.pipe(useref())
+		.pipe($.useref())
 		.pipe(gulp.dest('dist'))
 		;
 
