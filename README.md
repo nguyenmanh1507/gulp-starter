@@ -26,7 +26,7 @@ Fast dive in to write code, task automate by Gulpjs
 * [gulp-if](https://www.npmjs.com/package/gulp-if) - Conditionally run a task.
 * [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) - Minify PNG, JPEG, GIF and SVG images.
 * [gulp-jshint](https://www.npmjs.com/package/gulp-jshint) - JSHint plugin for gulp.
-* [gulp-minify-css](https://www.npmjs.com/package/gulp-minify-css/) - Minify css with clean-css.
+* [gulp-cssnano](https://www.npmjs.com/package/gulp-cssnano) - Minify CSS with cssnano.
 * [gulp-sass](https://www.npmjs.com/package/gulp-sass/) - Gulp plugin for sass.
 * [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps) - Sourcemap for JS file.
 * [gulp-tinypng-compress](https://www.npmjs.com/package/gulp-tinypng-compress) - TinyPNG API wrapper for compressing PNG & JPG images.
